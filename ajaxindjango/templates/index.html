@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Like Post App</title>
+</head>
+
+<body>
+    <p id="msg"></p>
+    {% for post in posts %}
+    <h3>{{ forloop.counter }}) {{ post.heading }}</h3>
+    <p>{{ post.data }} </p>
+    <a class="likes" id="like{{post.id}}" data="{{ post.id }}"><button>Like</button></a> {% endfor %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        $('.likes').click(function() {
+            var aa;
+            aa = $(this).attr("data");
+            $.ajax({
+                type: "GET",
+                url: "/postlikes",
+                data: {
+                    post_id: aa
+                },
+                success: function(data) {
+                    $('#like' + aa).remove();
+                    $('#msg').text(data);
+                }
+            })
+        });
+    </script>
+</body>
+
+</html>
